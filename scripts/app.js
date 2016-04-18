@@ -31,7 +31,7 @@ angular.module('CellSystem').config(['ChartJsProvider', function (ChartJsProvide
     var initialBlock = mapsize * 0.1;
 
     $scope.lbl_pie = ["Dead", "Alive"];
-    $scope.ds_pie = [100, mapsize - 100];
+    $scope.ds_pie = [initialBlock, mapsize - initialBlock];
 
     // chart Preperation
     $scope.initPercent = parseInt(10);
@@ -43,7 +43,7 @@ angular.module('CellSystem').config(['ChartJsProvider', function (ChartJsProvide
     $scope.lbl_line = [0];
     // i know ... scarry....
     $scope.series = ['&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Population' ];
-    $scope.ds_line = [[100]];
+    $scope.ds_line = [[initialBlock]];
 
 
     $scope.runStepByStep = function() {

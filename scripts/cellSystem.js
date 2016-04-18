@@ -20,7 +20,7 @@ class CellSystem {
 
         let neighbors = this.getNeighbors(currentCell);
 
-        if(currentCell.isBlocked || currentCell.isVisited || currentCell.isGoal) {
+        if((currentCell.isBlocked || currentCell.isVisited || currentCell.isGoal) && neighbors.length > 0 ) {
 
           // Reset if Cell Moved previously
           if(currentCell.isGoal) {
@@ -28,7 +28,19 @@ class CellSystem {
           }
 
           // Cell RuleSystem.
+          var ran = _.random(0,100);
+          var direction = _.random(0, neighbors.length - 1);
+          if (ran <= divicePercentCell) {
+                neighbors[direction].type = CellType.Visited;
+          }
+          if(ran <= divicePercentCell + flipPercentCell && ran > divicePercentCell ) {
+                currentCell.type = CellType.Free;
+                neighbors[direction].type = CellType.Goal;
+          }
 
+
+
+/*
           for (let neighbor of neighbors) {
             // 50 % chance for each desicion
             var ran = _.random(0,100);
@@ -42,7 +54,7 @@ class CellSystem {
                   break;
 
             }
-          }
+          } */
         }
         return isRunning;
     }
