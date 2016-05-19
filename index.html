@@ -1,17 +1,7 @@
-<html ng-app="CellSystem">
+<html>
 
 <head>
-    <script src="node_modules/angular/angular.js"></script>
-    <script src="node_modules/angular/ui-bootstrap-1.3.2.min.js"></script>
-    <script src="node_modules/lodash/lodash.min.js"></script>
-    <script src="node_modules/angular/Chart.min.js"></script>
-    <script src="node_modules/angular/angular-chart.js"></script>
-    <script src="scripts/map.js"></script>
-    <script src="scripts/cellSystem.js"></script>
-    <script src="scripts/app.js"></script>
-    <link rel="stylesheet" type="text/css" href="styles/svg.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="node_modules/angular/angular-chart.css">
+    <link rel="stylesheet" type="text/css" href="GraphSystem/css/bootstrap.css" />
 </head>
 <body>
 
@@ -24,69 +14,49 @@
     </div>
   </div>
 <!-- body -->
-  <div class="container" ng-controller="MapController as map" cols="30" rows="30">
+  <div class="container">
     <div class="row" >
-      <div class="col-xs-12">
+      <div class="col-xs-12 center" style="text-align: center;">
         <h1>&nbsp;</h1>
-        <h3>Cell System</h3>
+        <h1>Chose System Type</h1>
       </div>
     </div>
       <div class="row" >
-        <div class="col-xs-8">
-          <!--map content-->
-          <svg ng-attr-height="{{map.heightPx +1}}" ng-attr-width="{{map.widthPx + 1}}">
-              <g ng-repeat="row in map.map.grid">
-                  <rect ng-repeat="cell in row" ng-attr-x="{{cell.position.x * map.cellSize}}" ng-attr-y="{{cell.position.y * map.cellSize}}" ng-attr-width="{{map.cellSize}}" ng-attr-height="{{map.cellSize}}"
-                        ng-class="{blocked:cell.isBlocked,current:cell.isCurrent,closed:cell.isVisited,start:cell.isStart, goal:cell.isGoal}"
-                     ng-mousedown="map.clickOnCell(cell)" ng-mouseover="map.mouseOverCell(cell, $event)" ng-attr-style="fill:{{cell.color}};"></rect>
-              </g>
-          </svg>
-        </div>
-        <div class="col-xs-4">
-          <!-- form content-->
-          <form name="controllerForm">
-              Current step: {{stepcounter}}<br><br>
-              <label><input type="text" name="input" ng-model="initPercent" min="1" max="100" required size="2">
-              </label> % - initial distribution<br>
-              <label><input type="text" name="input" ng-model="dividePercent" min="1" max="100" required size="2">
-              </label> % - divide percent<br>
-              <label><input type="text" name="input" ng-model="flipPercent" min="1" max="100" required size="2">
-              </label> % - flip percent<br>
-              <div role="alert">
-                <span class="error" ng-show="controllerForm.input.$error.required">
-                  Required!</span>
-              </div>
-                <input type="button" class="btn btn-default btn-block" ng-click="map.addRandomObstacles()" value="Add random blocks" />
-                <button type="button" class="btn btn-default btn-block" data-ng-click="resetMap()">Reset</button>
-                <button type="button" class="btn btn-default btn-block" data-ng-click="runStepByStep()">Divide</button>
-                <button type="button" class="btn btn-default btn-block" data-ng-click="stopRun()">Stop</button>
-          </form>
-        </div>
-    </div>
-    <h3>Analytics</h3>
-    <div class="row">
-        <div class="col-xs-3">
-          <h4>Population Total</h4>
-          <canvas id="line" name="line" class="chart chart-line" chart-data="ds_line"
-            chart-labels="lbl_line" chart-legend="false" chart-series="series"
-            chart-options="{ showXLabels: 10 }"
-            chart-click="onClick">
-          </canvas>
-        </div>
-        <div class="col-md-offset-1 col-xs-3">
-          <h4>Population Percent</h4>
-          <canvas id="pie" class="chart chart-pie"
-            chart-data="ds_pie" chart-labels="lbl_pie" chart-options="{ animationSteps : 0 }">
-          </canvas>
-        </div>
-        <div class="col-md-offset-1 col-xs-3">
-          <h4>Cell Behavior</h4>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12"><h1>&nbsp;</h1></div>
+          </div>
 
-        </div>
-      </div>
+        	<hr class="featurette-divider" style="border-top: 2px solid #607D8B;">
 
+          <div class="row">
+        		<div class="col-sm-5">
+        		 	<img class="featurette-image img-responsive center-block" src="images/Graph.png" height="200px" width="200px" alt="Generic placeholder image">
+        		</div>
+        		<div class="col-sm-7">
+        			<h2 class="featurette-heading">Graph Based Cell System<span class="text-muted"></span></h2>
+                     <p>Create a Cellsystem with Delaunay and Voronoi Algorithm and simulate its behavior.</p>
+                     <a type="button" class="btn btn-default" href="GraphSystem/index.html">Go to.</a>
+        		</div>
+        	</div>
+
+        	<hr class="featurette-divider" style="border-top: 2px solid #607D8B;">
+
+        	<div class="row">
+        		<div class="col-sm-7">
+        			<h2 class="featurette-heading">Grid Based Cell System<span class="text-muted"></span></h2>
+                     <p>Create a Cellsystem compareable with Game of Life Automata and simulate its behavior</p>
+                     <a type="button" class="btn btn-default" href="GridSystem/index.html">Go to.</a>
+        		</div>
+        		<div class="col-sm-5">
+        		 	<img class="featurette-image img-responsive center-block" src="images/Grid.png" height="200px" width="200px" alt="Generic placeholder image">
+        		</div>
+        	</div>
+        	<hr class="featurette-divider" style="border-top: 2px solid #607D8B;">
+        </div>
     </div>
   </div>
+</div>
 </body>
 <script src="node_modules/angular/Chart.min.js"></script>
 <script src="node_modules/angular/angular-chart.js"></script>
