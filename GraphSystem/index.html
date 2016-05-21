@@ -4,18 +4,13 @@
     <!-- weitere Kopfinformationen -->
 	<script src="bin/angular.min.js"></script>
   <script src="bin/lodash/lodash.min.js"></script>
-  <script src="bin/surface.js"></script>
-  <script src="bin/cell.js"></script>
   <script src="bin/app.js"></script>
   <script src="bin/helper.js"></script>
-    <!-- START VORONOI IMPORTS -->
-  <script src="src/veronoi/Point.js"></script>
-  <script src="src/veronoi/VEdge.js"></script>
-  <script src="src/veronoi/VEvent.js"></script>
-  <script src="src/veronoi/VParabola.js"></script>
-  <script src="src/veronoi/VQueue.js"></script>
-  <script src="src/veronoi/VPolygon.js"></script>
-  <script src="src/veronoi/Voronoi.js"></script>
+    <!-- START 3D js IMPORTS -->
+  <script src="src/d3-voronoi.v0.3.min.js"></script>
+  <script src="src/d3-timer.v0.1.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="http://d3js.org/topojson.v1.min.js"></script>
 
 	<!-- Kommentare werden im Browser nicht angezeigt. -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
@@ -56,19 +51,18 @@
         <form name="controllerForm">
             Current step: {{stepcounter}}<br><br>
             <label><input type="text" name="input" ng-model="initDensity" min="1" max="100" required size="2">
+            </label> % - initial cell density<br>
+            <label><input type="text" name="input" ng-model="initDistribution" min="1" max="100" required size="2">
             </label> % - initial distribution<br>
             <label><input type="text" name="input" ng-model="dividePercent" min="1" max="100" required size="2">
             </label> % - divide percent<br>
             <label><input type="text" name="input" ng-model="flipPercent" min="1" max="100" required size="2">
-            </label> % - flip percent<br>
-            <div role="alert">
-              <span class="error" ng-show="controllerForm.input.$error.required">
-                Required!</span>
-            </div>
-            <button type="button" class="btn btn-default btn-block" ng-click="generateMap()">Generate Map</button><br/>
-            <button type="button" class="btn btn-default btn-block" ng-click="generateGraph()">Generate Graph</button><br/>
+            </label> % - flip percent<br><br>
+            <button type="button" class="btn btn-default btn-block" ng-click="generateMap()">Generate Map</button>
+            <button type="button" class="btn btn-default btn-block" ng-click="simulate()">Simulate</button><br/>
             <label><input type="checkbox" ng-model="algorithm.voronoi" ng-click="reDrawGraph()"> - Voronoi</label><br/>
             <label><input type="checkbox" ng-model="algorithm.delaunay" ng-click="reDrawGraph()"> - Delaunay</label><br/>
+            <label><input type="checkbox" ng-model="algorithm.pointers" ng-click="reDrawGraph()"> - Points</label><br/>
         </form>
       </div>
   </div>
