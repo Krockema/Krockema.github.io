@@ -1,6 +1,6 @@
 <html ng-app="app">
   <head>
-    <title>SigmaTest</title>
+    <title>Cell Sim</title>
     <!-- weitere Kopfinformationen -->
 	<script src="bin/angular.min.js"></script>
   <script src="bin/lodash/lodash.min.js"></script>
@@ -59,10 +59,11 @@
             <label><input type="text" name="input" ng-model="flipPercent" min="1" max="100" required size="2">
             </label> % - flip percent<br><br>
             <button type="button" class="btn btn-default btn-block" ng-click="generateMap()">Generate Map</button>
-            <button type="button" class="btn btn-default btn-block" ng-click="simulate()">Simulate</button><br/>
-            <label><input type="checkbox" ng-model="algorithm.voronoi" ng-click="reDrawGraph()"> - Voronoi</label><br/>
-            <label><input type="checkbox" ng-model="algorithm.delaunay" ng-click="reDrawGraph()"> - Delaunay</label><br/>
-            <label><input type="checkbox" ng-model="algorithm.pointers" ng-click="reDrawGraph()"> - Points</label><br/>
+            <button type="button" class="btn btn-default btn-block" ng-click="startRun()">Start Simulation</button>
+            <button type="button" class="btn btn-default btn-block" ng-click="stopRun()">Stop Simulation</button><br/>
+            <label><input type="checkbox" ng-model="algorithm.voronoi" ng-click="refreshGraph()"> - Voronoi</label><br/>
+            <label><input type="checkbox" ng-model="algorithm.delaunay" ng-click="refreshGraph()"> - Delaunay</label><br/>
+            <label><input type="checkbox" ng-model="algorithm.pointers" ng-click="refreshGraph()"> - Points</label><br/>
         </form>
       </div>
   </div>

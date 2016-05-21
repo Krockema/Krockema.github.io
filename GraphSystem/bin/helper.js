@@ -69,7 +69,7 @@ function computeTopology(diagram) {
   };
 }
 
-function calcPolygonArea(v) {
+function calcPolygonArea2(v) {
     var total = 0;
     for (var k = 0; k < v.coordinates.length; k++) {
       var cellTotal = 0;
@@ -89,4 +89,34 @@ function calcPolygonArea(v) {
     console.log('Total: ' + Math.abs(total));
 
     // return ;
+}
+
+function calcPolygonArea(v) {
+  var total = 0;
+  for (var k = 0; k < v.coordinates.length; k++) {
+    var cellTotal = 0;
+    var vertices = v.coordinates[k];
+    cellTotal = polygonArea(vertices)
+    console.log('cell total: ' + Math.abs(cellTotal));
+    total = total + Math.abs(cellTotal);
+  }
+  console.log('Total: ' + Math.abs(total));
+
+}
+function polygonArea(polygons)
+{
+  var j = 0;
+  var area = 0;
+  // console.log('Polygons is...', polygons);
+
+  for (var i = 0; i < polygons.length; i++) {
+     j = (i + 1) % polygons.length;
+
+     area += polygons[i][0] * polygons[j][1];
+     area -= polygons[i][1] * polygons[j][0];
+    // console.log('Area is...', area, polygons[i][0] * polygons[j][1] - polygons[i][1] * polygons[j][0]);
+  }
+
+  area /= 2;
+  return (area < 0 ? -area : area);
 }
