@@ -82,6 +82,8 @@ angular.module('app').config(['ChartJsProvider', function (ChartJsProvider) {
       if(Math.sqrt( (x2-=x1)*x2 + (y2-=y1)*y2 ) < maxDistance) {
         population++;
         return 'infected';
+      } else {
+        return 'healthy';
       }
     }
     if (Math.random() < (parseInt($scope.initDistribution) / 100)) {
