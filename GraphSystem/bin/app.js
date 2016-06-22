@@ -75,22 +75,20 @@ angular.module('app').config(['ChartJsProvider', function (ChartJsProvider) {
   }
 
   function getCellInfectionState(x2, y2) {
+    var cellType = 'healthy';
     let maxDistance = (width * (parseInt($scope.initDistribution) / 100));
     let x1 = width / 2;
     let y1 = height / 2;
     if($scope.algorithm.centerInfection === true) {
       if(Math.sqrt( (x2-=x1)*x2 + (y2-=y1)*y2 ) < maxDistance) {
         population++;
-        return 'infected';
-      } else {
-        return 'healthy';
+        cellType = 'infected';
       }
-    }
-    if (Math.random() < (parseInt($scope.initDistribution) / 100)) {
+    } else if (Math.random() < (parseInt($scope.initDistribution) / 100)) {
       population++;
-      return 'infected';
+      cellType = 'infected';
     }
-    return 'healthy';
+    return cellType;
   }
 
   $scope.startRun = function() {
