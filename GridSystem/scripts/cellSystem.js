@@ -12,7 +12,7 @@ class CellSystem {
         }
     }
 
-    step(divicePercentCell, flipPercentCell) {
+    step(dividePercentCell, flipPercentCell) {
         let isRunning = true;
         let currentCell = this.map.getRandomCell();
 
@@ -30,10 +30,10 @@ class CellSystem {
           // Cell RuleSystem.
           var ran = _.random(0,100);
           var direction = _.random(0, neighbors.length - 1);
-          if (ran <= divicePercentCell) {
+          if (ran <= dividePercentCell) {
                 neighbors[direction].type = CellType.Visited;
           }
-          if(ran <= divicePercentCell + flipPercentCell && ran > divicePercentCell ) {
+          if(ran <= dividePercentCell + flipPercentCell && ran > dividePercentCell ) {
                 currentCell.type = CellType.Free;
                 neighbors[direction].type = CellType.Goal;
           }

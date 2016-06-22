@@ -14,6 +14,8 @@
 
 	<!-- Kommentare werden im Browser nicht angezeigt. -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="css/angular-chart.min.css" />
+
   <style type="text/css">
     body {
       margin: 0;
@@ -44,7 +46,7 @@
     <div class="row" >
       <div class="col-xs-8">
         <!--map content-->
-         <canvas id="c"> </canvas><br/>
+         <canvas id="c" ng-click"onClick()"> </canvas><br/>
       </div>
       <div class="col-xs-4">
         <!-- form content-->
@@ -61,13 +63,38 @@
             <button type="button" class="btn btn-default btn-block" ng-click="generateMap()">Generate Map</button>
             <button type="button" class="btn btn-default btn-block" ng-click="startRun()">Start Simulation</button>
             <button type="button" class="btn btn-default btn-block" ng-click="stopRun()">Stop Simulation</button><br/>
+            <label><input type="checkbox" ng-model="algorithm.centerInfection"> - Inject from Center</label><br/>
             <label><input type="checkbox" ng-model="algorithm.voronoi" ng-click="refreshGraph()"> - Voronoi</label><br/>
             <label><input type="checkbox" ng-model="algorithm.delaunay" ng-click="refreshGraph()"> - Delaunay</label><br/>
             <label><input type="checkbox" ng-model="algorithm.pointers" ng-click="refreshGraph()"> - Points</label><br/>
         </form>
       </div>
   </div>
+  <h3>Analytics</h3>
+  <div class="row">
+      <div class="col-xs-5">
+        <h4>Population</h4>
+        <canvas id="line" name="line" class="chart chart-line" chart-data="ds_line"
+          chart-labels="lbl_line" chart-legend="false" chart-series="series"
+          chart-options="{ animationSteps : 0 }"
+          chart-click="onClick">
+        </canvas>
+      </div>
+      <div class="col-md-offset-1 col-xs-5">
+        <h4>Cell Behavior</h4>
+        <canvas id="pie" class="chart chart-pie"
+          chart-data="ds_pie" chart-labels="lbl_pie" chart-options="{ animationSteps : 0 }">
+        </canvas>
+      </div>
+      <!--
+      <div class="col-md-offset-1 col-xs-3">
+        <h4>Another Chart</h4>
+      </div>
+      -->
+    </div>
   </div>
 
 </body>
+<script src="bin/chart/Chart.min.js"></script>
+<script src="bin/chart/angular-chart.min.js"></script>
 </html>
