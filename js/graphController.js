@@ -4,6 +4,7 @@ app.controller('graphController', function ($interval, $scope) {
   $scope.initDistribution = parseInt(10);
   $scope.dividePercent = parseInt(70);
   $scope.flipPercent = parseInt(30);
+  $scope.updateCycle = parseInt(100);
   $scope.stepcounter = 0;
 
 
@@ -22,7 +23,8 @@ app.controller('graphController', function ($interval, $scope) {
     delaunay : false,
     pointers : true,
     centerInfection : false,
-  }
+    dynamicSystem : false
+  };
   var stop;
   // Canvas Context
   var canvas = document.getElementById("c"),
@@ -56,7 +58,8 @@ app.controller('graphController', function ($interval, $scope) {
       VoronoiGeo = topojson.mesh(topology, topology.objects.voronoi, function(a, b) { return a !== b; });
       reDrawGraph(topology);
       // start voronoi teslation and Create its TreeStructure
-  }
+  };
+
   function getCellInfectionState(x2, y2) {
     var cellType = 'healthy';
     let maxDistance = (width * (parseInt($scope.initDistribution) / 100));
@@ -76,35 +79,34 @@ app.controller('graphController', function ($interval, $scope) {
 
   $scope.startRun = function() {
     // Don't start a new Run if the Old is still active
+    // TODO: Abbruchbedingung --> System is full;
     if ( angular.isDefined(stop) ) return;
 
       var dp = parseInt($scope.dividePercent);
       var fc = parseInt($scope.flipPercent);
       stop = $interval(function() {
-        // ------------ IMPORTANT -----------------
-        // TO DO IF THE CELLS COULD MOVE
-        // the topology need to be refreshed!
-        // ----------------------------------------
-        // topology = computeTopology(voronoi(particles)); // for recreating the topology if cell realy should move some time
-        // VoronoiGeo = topojson.mesh(topology, topology.objects.voronoi, function(a, b) { return a !== b; });  // required ? not sure
-
         // Step Logic
-        step(dp, fc);
+        if ($scope.algorithm.dynamicSystem) {
+          stepDynamic(dp, fc);
+        } else {
+          stepStatic(dp, fc);
+        }
         // Step Counter
         $scope.stepcounter = $scope.stepcounter + 1;
 
-        if($scope.stepcounter % 100 == 0) {
+        if($scope.stepcounter % parseInt($scope.updateCycle) === 0) {
           reDrawGraph();
-          /* Statistics - not iplemented yet */
+        }
+
+        if($scope.stepcounter % 100 === 0) {
+          /* Statistics -  */
           $scope.ds_line[0].push(population);
           $scope.lbl_line.push($scope.stepcounter / 100);
           $scope.ds_pie = [population, parseInt($scope.initDensity) - population];
-
-          }
-
+        }
       }, 0); // ms till next Step.
 
-  }
+  };
 
   $scope.stopRun = function() {
     if (angular.isDefined(stop)) {
@@ -113,14 +115,35 @@ app.controller('graphController', function ($interval, $scope) {
     }
   };
 
-  function step(dividePercentCell, flipPercentCell) {
+  function stepDynamic(dividePercentCell, flipPercentCell) {
+    let isRunning = true;
+
+    for (var i = 0; i < particles.length; ++i) {
+        var p = particles[i];
+        p[0] += p.vx; if (p[0] < 0) p[0] = p.vx *= -1; else if (p[0] > width) p[0] = width + (p.vx *= -1);
+        p[1] += p.vy; if (p[1] < 0) p[1] = p.vy *= -1; else if (p[1] > height) p[1] = height + (p.vy *= -1);
+        p.vx += 0.1 * (Math.random() - 0.5) - 0.01 * p.vx;
+        p.vy += 0.1 * (Math.random() - 0.5) - 0.01 * p.vy;
+
+    }
+    var currentCell = _.random(0, parseInt($scope.initDensity) - 1);
+    if (Math.random() < (dividePercentCell / 100)) {
+      particles.push(_.clone(particles[currentCell]));
+    }
+
+    topology = computeTopology(voronoi(particles)); // for recreating the topology if cell realy should move some time
+    VoronoiGeo = topojson.mesh(topology, topology.objects.voronoi, function(a, b) { return a !== b; });  // required ? not sure
+    return isRunning;
+  }
+
+  function stepStatic(dividePercentCell, flipPercentCell) {
       let isRunning = true;
       let currentCell = _.random(0, parseInt($scope.initDensity) - 1);
 
       if(particles[currentCell].cellType == 'infected' || particles[currentCell].cellType == 'moved' || particles[currentCell].cellType == 'divided') {
 
         // Reset if Cell Moved or Infected previously
-        if(!(particles[currentCell].cellType == 'infected')) {
+        if(particles[currentCell].cellType != 'infected') {
           particles[currentCell].cellType = 'infected';
         }
 
@@ -157,7 +180,7 @@ app.controller('graphController', function ($interval, $scope) {
 
   $scope.refreshGraph = function() {
     reDrawGraph();
-  }
+  };
 
   function reDrawGraph() {
     context.clearRect(0, 0, width, height);
