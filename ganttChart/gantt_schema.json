@@ -1,0 +1,41 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "description": "Schema to display gantt plans",
+    "type": "array",
+    "properties": {
+      "items": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "article": {
+            "description": "Article Name",
+            "type": "string"
+          },
+          "articleId": {
+            "description": "Unique ident for this Production item (Guid or Int)",
+            "type": "GUID"
+          },        
+          "operation": {
+            "description": "Operation Name",
+            "type": "string"
+          },
+          "operationId": {
+            "description": "Unique ident for this Operation item (Guid or Int)",
+            "type": "GUID"
+          },                    
+          "resource": {
+            "description": "Resource or resource group name",
+            "type": "string"
+          }, 
+          "start": {
+            "description": "Operation Start Time",
+            "type": "int"
+          },
+          "end": {
+            "description": "Operation End Time",
+            "type": "int"
+          }
+        }
+      }
+    }
+  }

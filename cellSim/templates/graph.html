@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row" >
+    <div class="col-xs-12">
+      <h1>&nbsp;</h1>
+      <h3>Cell System</h3>
+    </div>
+  </div>
+    <div class="row" >
+      <div class="col-xs-8">
+        <!--map content-->
+         <canvas id="c" ng-click"onClick()" style="border:1px solid #000000;"> </canvas>
+      </div>
+      <div class="col-xs-4">
+        <!-- form content-->
+        <form name="controllerForm">
+            Current step: {{stepcounter}}<br><br>
+            <input type="text" name="input" ng-model="initDensity" min="1" max="100" required size="2">
+              <label> n - initial cell density</label><br>
+            <input type="text" name="input" ng-model="initDistribution" min="1" max="100" required size="2">
+              <label> % - initial distribution</label><br>
+            <input type="text" name="input" ng-model="dividePercent" min="1" max="100" required size="2">
+              <label> % - divide percent</label><br>
+            <input type="text" name="input" ng-model="flipPercent" min="1" max="100" required size="2">
+              <label> % - flip percent</label><br>
+            <input type="text" name="input" ng-model="updateCycle" min="1" max="100" required size="2">
+              <label> u - updateCycle</label><br><br>
+            <button type="button" class="btn btn-default btn-block" ng-click="generateMap()">Generate Map</button>
+            <button type="button" class="btn btn-default btn-block" ng-click="startRun()">Start Simulation</button>
+            <button type="button" class="btn btn-default btn-block" ng-click="stopRun()">Stop Simulation</button><br/>
+            <input type="checkbox" ng-model="algorithm.centerInfection"> <label> - Inject from Center</label><br/>
+            <input type="checkbox" ng-model="algorithm.dynamicSystem"> <label> - dynamic Model</label><br/>
+            <input type="checkbox" ng-model="algorithm.voronoi" ng-click="refreshGraph()"> <label> - Voronoi</label><br/>
+            <input type="checkbox" ng-model="algorithm.delaunay" ng-click="refreshGraph()"> <label> - Delaunay</label><br/>
+            <input type="checkbox" ng-model="algorithm.pointers" ng-click="refreshGraph()"> <label> - Points</label><br/>
+        </form>
+      </div>
+  </div>
+  <h3>Analytics</h3>
+  <div class="row">
+      <div class="col-xs-5">
+        <h4>Population</h4>
+        <canvas id="line" name="line" class="chart chart-line" chart-data="ds_line"
+          chart-labels="lbl_line" chart-legend="false" chart-series="series"
+          chart-options="{ animationSteps : 0 }"
+          chart-click="onClick">
+        </canvas>
+      </div>
+      <div class="col-md-offset-1 col-xs-5">
+        <h4>Cell Behavior</h4>
+        <canvas id="pie" class="chart chart-pie"
+          chart-data="ds_pie" chart-labels="lbl_pie" chart-options="{ animationSteps : 0 }">
+        </canvas>
+      </div>
+      <!--
+      <div class="col-md-offset-1 col-xs-3">
+        <h4>Another Chart</h4>
+      </div>
+      -->
+    </div>
+  </div>

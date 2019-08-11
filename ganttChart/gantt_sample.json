@@ -1,0 +1,20 @@
+[
+    {
+      "article" : "Race-Truck",        
+      "articleId" : "00-00-001",
+      "operation" : "drill two holes",
+      "operationId" : "00-00-001",
+      "resource" : "drill",
+      "start" : "10",
+      "end" : "20"
+    },
+    {
+      "article" : "Dump-Truck",
+      "articleId" : "00-00-001",
+      "operation" : "glue something together", 
+      "operationId" : "00-00-002",
+      "resource" : "assembly",
+      "start" : "20",
+      "end" : "15000"
+    }
+  ]

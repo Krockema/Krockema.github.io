@@ -1,0 +1,64 @@
+<ion-view>
+  <div class="container">
+    <div class="row" >
+      <div class="col-xs-12">
+        <h1>&nbsp;</h1>
+        <h3>Cell System</h3>
+      </div>
+    </div>
+      <div class="row" >
+        <div class="col-xs-8">
+          <!--map content-->
+          <svg ng-attr-height="{{map.heightPx +1}}" ng-attr-width="{{map.widthPx + 1}}">
+              <g ng-repeat="row in map.map.grid">
+                  <rect ng-repeat="cell in row" ng-attr-x="{{cell.position.x * map.cellSize}}" ng-attr-y="{{cell.position.y * map.cellSize}}" ng-attr-width="{{map.cellSize}}" ng-attr-height="{{map.cellSize}}"
+                        ng-class="{blocked:cell.isBlocked,current:cell.isCurrent,closed:cell.isVisited,start:cell.isStart, goal:cell.isGoal}"
+                     ng-mousedown="map.clickOnCell(cell)" ng-mouseover="map.mouseOverCell(cell, $event)" ng-attr-style="fill:{{cell.color}};"></rect>
+              </g>
+          </svg>
+        </div>
+        <div class="col-xs-4">
+          <!-- form content-->
+          <form name="controllerForm">
+              Current step: {{stepcounter}}<br><br>
+              <label><input type="text" name="input" ng-model="initPercent" min="1" max="100" required size="2">
+              </label> % - initial distribution<br>
+              <label><input type="text" name="input" ng-model="dividePercent" min="1" max="100" required size="2">
+              </label> % - divide percent<br>
+              <label><input type="text" name="input" ng-model="flipPercent" min="1" max="100" required size="2">
+              </label> % - flip percent<br>
+              <div role="alert">
+                <span class="error" ng-show="controllerForm.input.$error.required">
+                  Required!</span>
+              </div>
+                <input type="button" class="btn btn-default btn-block" ng-click="map.addRandomObstacles()" value="Add random blocks" />
+                <button type="button" class="btn btn-default btn-block" data-ng-click="resetMap()">Reset</button>
+                <button type="button" class="btn btn-default btn-block" data-ng-click="runStepByStep()">Divide</button>
+                <button type="button" class="btn btn-default btn-block" data-ng-click="stopRun()">Stop</button>
+          </form>
+        </div>
+    </div>
+    <h3>Analytics</h3>
+    <div class="row">
+        <div class="col-xs-3">
+          <h4>Population</h4>
+          <canvas id="line" name="line" class="chart chart-line" chart-data="ds_line"
+            chart-labels="lbl_line" chart-legend="false" chart-series="series"
+            chart-options="{ animationSteps : 0 }"
+            chart-click="onClick">
+          </canvas>
+        </div>
+        <div class="col-md-offset-1 col-xs-3">
+          <h4>Cell Behavior</h4>
+          <canvas id="pie" class="chart chart-pie"
+            chart-data="ds_pie" chart-labels="lbl_pie" chart-options="{ animationSteps : 0 }">
+          </canvas>
+        </div>
+        <div class="col-md-offset-1 col-xs-3">
+          <!--<h4>Another Chart</h4>-->
+
+        </div>
+      </div>
+
+    </div>
+</ion-view>
