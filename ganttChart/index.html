@@ -147,10 +147,8 @@
               { 
                 //.push([ new { data : [start, end, op]}])
                 chart.data.datasets.push(data);
-                chart.data.datasets[index].data.push([start, end, op]);
-              } else {
-                chart.data.datasets[index].push([start, end, op]);
               }
+              chart.data.datasets[index].data.push([start, end, op]);
             });
              console.log(chart.data.labels);
              console.log(chart.data.datasets);
