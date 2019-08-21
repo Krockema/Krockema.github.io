@@ -44,11 +44,11 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
           <h2>Input</h2>
           <p>
             <form>
-              <textarea id="chartJson" name="chartJson" rows="30" cols="50">
+              <textarea id="chartJson" name="chartJson" rows="10" cols="100">
 [
   {
     "article" : "Race-Truck",        
@@ -75,16 +75,18 @@
             </form>
           </p>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-12">
           <h2>Timeline</h2>
             <div id="chartTarget" style=" width: 100%;">
-              <canvas id="chartCanvas" width="600" style="display: block; width: 600px;"></canvas>
+              <canvas id="chartCanvas" height="400" style="display: block;"></canvas>
               <div style="opacity:0;" class="chartTooltip center"> </div>
             </div>
             <script>
                 var data = {
                   "type": "timeline",
                       "options": {
+                        responsive:true,
+                        maintainAspectRatio: false,
                         tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
