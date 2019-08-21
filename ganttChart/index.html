@@ -84,7 +84,19 @@
             <script>
                 var data = {
                   "type": "timeline",
-                  "options": {
+                      "options": {
+                        tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = '\r\n Start : ' + tooltipItem.yLabel[4];
+                                label += '\r\n End   : ' + tooltipItem.yLabel[5];
+                                return label;
+                            },
+                            title: function(tooltipItem, data) {
+                                return tooltipItem[0].yLabel[2];
+                            }
+                        }
+                      },
                       "elements": {
                           "colorFunction": function(text, data, dataset, index) {
                                 return Color(data[3]);
@@ -151,7 +163,7 @@
               if(element.Color !== undefined){
                 colorCode = element.Color;
               }
-              chart.data.datasets[index].data.push([start, end, op, colorCode]);
+              chart.data.datasets[index].data.push([start, end, op, colorCode, element.start, element.end]);
             });
             var steps = Math.round(maxTime/10);
             chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
