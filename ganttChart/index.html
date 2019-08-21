@@ -145,8 +145,8 @@
             var maxTime = 0;
             parsed_json.forEach(element => {
               var index = 0;
-              if(element.end > maxTime){
-                  maxTime = element.end;
+              if(parseInt(element.end) > parseInt(maxTime)){
+                  maxTime = parseInt(element.end);
               }
               if(!chart.data.labels.includes(element.resource))
                 { 
