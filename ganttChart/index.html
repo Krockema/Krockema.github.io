@@ -87,10 +87,7 @@
                   "options": {
                       "elements": {
                           "colorFunction": function(text, data, dataset, index) {
-                              if(text.includes("Setup") == true)
-                                return Color('rgba(255, 99, 132)');
-                              else 
-                                return Color('rgba(55, 99, 255)');
+                                return Color(data[3]);
                           },
                           "showText": true,
                           "textPadding": 15
@@ -131,25 +128,35 @@
 
             var parsed_json = JSON.parse(document.getElementById("chartJson").value);
             console.log(parsed_json);
-            
+            var maxTime = 0;
             parsed_json.forEach(element => {
               var index = 0;
+              if(element.end > maxTime){
+                  maxTime = element.end;
+              }
               if(!chart.data.labels.includes(element.resource))
                 { 
-                  chart.data.labels.push(element.resource); 
-                  index = chart.data.labels.indexOf(element.resource);   
+                  chart.data.labels.push(element.resource);
                 }
+                index = chart.data.labels.indexOf(element.resource); 
               var start = new Date(1262304000+parseInt(element.start)).toISOString();
               var end = new Date(1262304000+parseInt(element.end)).toISOString();
               var op = element.operation;
               var data = { "data" : [] };
               if(chart.data.datasets[index] === undefined)
               { 
-                //.push([ new { data : [start, end, op]}])
                 chart.data.datasets.push(data);
               }
-              chart.data.datasets[index].data.push([start, end, op]);
+              var colorCode = "rgba(55, 99, 255)";
+              if(element.Color !== undefined){
+                colorCode = element.Color;
+              }
+              chart.data.datasets[index].data.push([start, end, op, colorCode]);
             });
+            var steps = Math.round(maxTime/10);
+            chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
+            chart.options.scales.xAxes[1].ticks.stepSize = steps; 
+                  
              console.log(chart.data.labels);
              console.log(chart.data.datasets);
              chart.update();
