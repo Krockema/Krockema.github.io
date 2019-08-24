@@ -28,7 +28,7 @@
             }
 
             .chartAreaWrapper {
-              width: 1200px;
+              width: 100%;
               overflow-x: scroll;
             }
         </style>
@@ -197,7 +197,7 @@
              console.log(chart.data.datasets);
              var targetCtx = document.getElementById("chartCanvas");
              var resizeTo = steps * window.devicePixelRatio * document.getElementById("scaling").value;
-             chart.canvas.width = resizeTo;
+             //chart.canvas.width = resizeTo;
              var chartDiv = document.getElementById("chartAreaWrapper2");
              chartDiv.setAttribute("style", "width: " + resizeTo + "px;");
              chart.resize();
