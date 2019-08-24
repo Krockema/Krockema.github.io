@@ -16,6 +16,21 @@
             .container {
               width: 100%;
             }
+            .chartWrapper {
+              position: relative;
+            }
+
+            .chartWrapper > canvas {
+              position: absolute;
+              left: 0;
+              top: 0;
+              pointer-events: none;
+            }
+
+            .chartAreaWrapper {
+              width: 1200px;
+              overflow-x: scroll;
+            }
         </style>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -71,21 +86,28 @@
 ]
               </textarea>
               <br>
+              
+              <label>Scaling: </label><input type="number" id="scaling" value="1" >
               <input type="button" id="createChart" value="Try" >
             </form>
           </p>
         </div>
         <div class="col-md-12">
           <h2>Timeline</h2>
-            <div id="chartTarget" style=" width: 100%;">
-              <canvas id="chartCanvas" height="400" style="display: block;"></canvas>
-              <div style="opacity:0;" class="chartTooltip center"> </div>
+          <div class="chartWrapper">
+            <div class="chartAreaWrapper">
+            <div id="chartAreaWrapper2">
+                <canvas id="chartCanvas" height="300" width="1200"></canvas>
             </div>
+            </div>
+          </div>
             <script>
+                var rectangleSet = false;
+
                 var data = {
                   "type": "timeline",
                       "options": {
-                        responsive:true,
+                        responsive: false,
                         maintainAspectRatio: false,
                         tooltips: {
                         callbacks: {
@@ -121,9 +143,9 @@
                       }
                     }]
                   }
-              }
+                }
             };
-            var chart = new Chart($('#chartCanvas')[0], data);
+            var chart = new Chart(chartCanvas, data);
         </script>
        </div>
       </div>
@@ -173,6 +195,12 @@
                   
              console.log(chart.data.labels);
              console.log(chart.data.datasets);
+             var targetCtx = document.getElementById("chartCanvas");
+             var resizeTo = steps * window.devicePixelRatio * document.getElementById("scaling").value;
+             chart.canvas.width = resizeTo;
+             var chartDiv = document.getElementById("chartAreaWrapper2");
+             chartDiv.setAttribute("style", "width: " + resizeTo + "px;");
+             chart.resize();
              chart.update();
           }
       </script>
