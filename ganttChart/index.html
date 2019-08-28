@@ -38,8 +38,11 @@
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.3/seedrandom.min.js"></script>
         <script src="js/vendor/Chart.Timeline.js"></script>
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+        <script src="js/ColorGenerator.js"></script>
+        <script src="js/Data.js"></script>
     </head>
     <body>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -61,33 +64,19 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Input</h2>
+          <div id="headingTest"></div>
+          <script> 
+              var htmlOut = ColorAbc()
+              var h2 = document.getElementById("headingTest");
+              h2.innerHTML = htmlOut;
+            </script>
           <p>
             <form>
               <textarea id="chartJson" name="chartJson" rows="10" cols="100">
-[
-  {
-    "article" : "Race-Truck",        
-    "articleId" : "00-00-001",
-    "operation" : "drill two holes",
-    "operationId" : "00-00-001",
-    "resource" : "drill",
-    "start" : "10",
-    "end" : "20"
-  },
-  {
-    "article" : "Dump-Truck",
-    "articleId" : "00-00-001",
-    "operation" : "glue something together", 
-    "operationId" : "00-00-002",
-    "resource" : "assembly",
-    "start" : "20",
-    "end" : "15000"
-  }
-]
-              </textarea>
+               </textarea>
               <br>
               
-              <label>Scaling: </label><input type="number" id="scaling" value="1" >
+              <label>Scaling: </label><input type="number" id="scaling" value="300" >
               <input type="button" id="createChart" value="Try" >
             </form>
           </p>
@@ -157,44 +146,55 @@
       </footer>
     </div> <!-- /container -->        
       <script>
+          document.getElementById('chartJson').textContent  =   JSON.stringify(DATA);
           document.querySelector('#createChart').addEventListener('click', createChart);
+          function GetUniqueOrders(jsonObject) {
+            var iterable = jsonObject.map(o => o.customerOrderId);
+            return new Set(iterable);
+          }
+
+
           function createChart () {
             chart.data.labels = [];
             chart.data.datasets = [];
-
             var parsed_json = JSON.parse(document.getElementById("chartJson").value);
-            console.log(parsed_json);
             var maxTime = 0;
-            parsed_json.forEach(element => {
-              var index = 0;
-              if(parseInt(element.end) > parseInt(maxTime)){
-                  maxTime = parseInt(element.end);
-              }
-              if(!chart.data.labels.includes(element.resource))
-                { 
-                  chart.data.labels.push(element.resource);
-                }
-                index = chart.data.labels.indexOf(element.resource); 
-              var start = new Date(1262304000+parseInt(element.start)).toISOString();
-              var end = new Date(1262304000+parseInt(element.end)).toISOString();
-              var op = element.operation;
-              var data = { "data" : [] };
-              if(chart.data.datasets[index] === undefined)
-              { 
-                chart.data.datasets.push(data);
-              }
-              var colorCode = "rgba(55, 99, 255)";
-              if(element.Color !== undefined){
-                colorCode = element.Color;
-              }
-              chart.data.datasets[index].data.push([start, end, op, colorCode, element.start, element.end]);
-            });
-            var steps = Math.round(maxTime/10);
-            chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
-            chart.options.scales.xAxes[1].ticks.stepSize = steps; 
-                  
-             console.log(chart.data.labels);
-             console.log(chart.data.datasets);
+            var seed = new Math.seedrandom('only4u');
+            var randomNr = seed();
+            var uniques = GetUniqueOrders(parsed_json)
+            var uniqueIterator = uniques.values();
+            for(i = 0; i < uniques.size; i++) {
+                var comparable = uniqueIterator.next().value;
+                var group = parsed_json.filter(f => f.customerOrderId === comparable);
+                group.forEach(element => {
+                  var index = 0;
+                  if(parseInt(element.end) > parseInt(maxTime)){
+                      maxTime = parseInt(element.end);
+                  }
+                  if(!chart.data.labels.includes(element.resource))
+                    { 
+                      chart.data.labels.push(element.resource);
+                    }
+                    index = chart.data.labels.indexOf(element.resource); 
+                  var start = new Date(1262304000+parseInt(element.start)).toISOString();
+                  var end = new Date(1262304000+parseInt(element.end)).toISOString();
+                  var op = element.operation;
+                  var data = { "data" : [] };
+                  if(chart.data.datasets[index] === undefined)
+                  { 
+                    chart.data.datasets.push(data);
+                  }
+
+                  var colorCode = goldenRatioColor(i, randomNr, 0.95, 0.95);
+                  var rgbColor = ColorArrayToRgba(colorCode, 1);
+                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end]);
+                });
+                var steps = Math.round(maxTime/10);
+                chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
+                chart.options.scales.xAxes[1].ticks.stepSize = steps; 
+            };
+
+
              var targetCtx = document.getElementById("chartCanvas");
              var resizeTo = steps * window.devicePixelRatio * document.getElementById("scaling").value;
              //chart.canvas.width = resizeTo;
