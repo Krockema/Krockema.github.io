@@ -64,19 +64,13 @@
       <div class="row">
         <div class="col-md-12">
           <h2>Input</h2>
-        <!--  <div id="headingTest"></div>
-          <script> 
-              var htmlOut = ColorAbc()
-              var h2 = document.getElementById("headingTest");
-              h2.innerHTML = htmlOut;
-            </script>-->
           <p>
             <form>
               <textarea id="chartJson" name="chartJson" rows="10" cols="100">
                </textarea>
               <br>
               
-              <label>Scaling: </label><input type="number" id="scaling" value="300" >
+              <label>Scaling: </label><input type="number" id="scaling" value="150" >
               <input type="button" id="createChart" value="Try" >
             </form>
           </p>
@@ -149,7 +143,7 @@
           document.getElementById('chartJson').textContent  =   JSON.stringify(DATA);
           document.querySelector('#createChart').addEventListener('click', createChart);
           function GetUniqueOrders(jsonObject) {
-            var iterable = jsonObject.map(o => o.customerOrderId);
+            var iterable = jsonObject.map(o => o.groupId);
             return new Set(iterable);
           }
 
@@ -159,13 +153,13 @@
             chart.data.datasets = [];
             var parsed_json = JSON.parse(document.getElementById("chartJson").value);
             var maxTime = 0;
-            var seed = new Math.seedrandom('only4u');
+            var seed = new Math.seedrandom('randomSeed');
             var randomNr = seed();
             var uniques = GetUniqueOrders(parsed_json)
             var uniqueIterator = uniques.values();
             for(i = 0; i < uniques.size; i++) {
                 var comparable = uniqueIterator.next().value;
-                var group = parsed_json.filter(f => f.customerOrderId === comparable);
+                var group = parsed_json.filter(f => f.groupId === comparable);
                 group.forEach(element => {
                   var index = 0;
                   if(parseInt(element.end) > parseInt(maxTime)){

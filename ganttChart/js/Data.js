@@ -7,7 +7,7 @@ var DATA = [
     "resource": "12280: Verpacken 1",
     "start": "81",
     "end": "92",
-    "customerOrderId" : "2"        
+    "groupId" : "2"        
   },
   {
     "article": null,
@@ -17,7 +17,7 @@ var DATA = [
     "resource": "12280: Verpacken 1",
     "start": "41",
     "end": "52",
-    "customerOrderId" : "1"
+    "groupId" : "1"
   },
   {
     "article": null,
@@ -27,7 +27,7 @@ var DATA = [
     "resource": "12281: Schweißen 1",
     "start": "18",
     "end": "38",
-    "customerOrderId" : "1"
+    "groupId" : "1"
   },
   {
     "article": null,
@@ -37,7 +37,7 @@ var DATA = [
     "resource": "12283: Montage 1",
     "start": "38",
     "end": "41",
-    "customerOrderId" : "1"
+    "groupId" : "1"
   },
   {
     "article": null,
@@ -47,7 +47,7 @@ var DATA = [
     "resource": "12282: Schweißen 2",
     "start": "18",
     "end": "38",
-    "customerOrderId" : "1"    
+    "groupId" : "1"    
   },
   {
     "article": null,
@@ -57,7 +57,7 @@ var DATA = [
     "resource": "12284: Montage 2",
     "start": "38",
     "end": "41",
-    "customerOrderId" : "1"    
+    "groupId" : "1"    
   },
   {
     "article": null,
@@ -67,7 +67,7 @@ var DATA = [
     "resource": "12280: Verpacken 1",
     "start": "92",
     "end": "103",
-    "customerOrderId" : "3"
+    "groupId" : "3"
   },
   {
     "article": null,
@@ -77,7 +77,7 @@ var DATA = [
     "resource": "12281: Schweißen 1",
     "start": "38",
     "end": "58",
-    "customerOrderId" : "2"    
+    "groupId" : "2"    
   },
   {
     "article": null,
@@ -87,7 +87,7 @@ var DATA = [
     "resource": "12283: Montage 1",
     "start": "58",
     "end": "61",
-    "customerOrderId" : "2"    
+    "groupId" : "2"    
   },
   {
     "article": null,
@@ -97,7 +97,7 @@ var DATA = [
     "resource": "12282: Schweißen 2",
     "start": "38",
     "end": "58",
-    "customerOrderId" : "3"
+    "groupId" : "3"
   },
   {
     "article": null,
@@ -107,7 +107,7 @@ var DATA = [
     "resource": "12284: Montage 2",
     "start": "58",
     "end": "61",
-    "customerOrderId" : "3"
+    "groupId" : "3"
   },
   {
     "article": null,
@@ -117,7 +117,7 @@ var DATA = [
     "resource": "12281: Schweißen 1",
     "start": "58",
     "end": "78",
-    "customerOrderId" : "2"        
+    "groupId" : "2"        
   },
   {
     "article": null,
@@ -127,7 +127,7 @@ var DATA = [
     "resource": "12283: Montage 1",
     "start": "78",
     "end": "81",
-    "customerOrderId" : "3"
+    "groupId" : "3"
   },
   {
     "article": null,
@@ -137,7 +137,7 @@ var DATA = [
     "resource": "12282: Schweißen 2",
     "start": "58",
     "end": "78",
-    "customerOrderId" : "3"
+    "groupId" : "3"
   },
   {
     "article": null,
@@ -147,6 +147,6 @@ var DATA = [
     "resource": "12284: Montage 2",
     "start": "78",
     "end": "81",
-    "customerOrderId" : "2"    
+    "groupId" : "2"    
   }
 ]
