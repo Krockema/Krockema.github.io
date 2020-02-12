@@ -13,18 +13,17 @@
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
         <a-scene embedded arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: true;" stats renderer="logarithmicDepthBuffer:true;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
                 <!--     position="x z y"-->
-            <a-plane position="3 -2 0" rotation="0 90 -90" width="5" height="5" color="#ffffff"></a-plane> 
-            
+           <!-- <a-plane position="0 -0.5 0" rotation="0 90 -90" width="5" height="5" color="#ffffff"></a-plane>             -->
 
             <a-entity gltf-model="url(models/sawAnimatedMergedBlade.glb)"
-                        position="3.5 0 1" 
+                        position="0 0 0" 
                         scale="1 1 1"
-                        rotation="0 0 90"
+                        rotation="90 0 -90"
                         animation-mixer="loop:repeat"
             ></a-entity>
 
 
-            <a-entity position="0 3 3">
+            <a-entity position="0 0 0">
                 <a-marker-camera preset='hiro'></a-marker-camera>
             </a-entity>
 
