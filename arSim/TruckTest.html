@@ -1,0 +1,35 @@
+﻿
+<!doctype HTML>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://rawgit.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v6.1.0/dist/aframe-extras.min.js"></script>
+    
+    <body style='margin : 0px; overflow: hidden;'>
+        <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+        <a-scene embedded arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: true;" stats renderer="logarithmicDepthBuffer:true;" inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
+                <!--     position="x z y"-->
+            <a-plane position="3 -2 0" rotation="-90 0 0" width="5" height="5" color="#ffffff"></a-plane> 
+            
+
+            <a-entity gltf-model="url(models/truck.glb)" 
+                        position="3 0 0" 
+                        scale="0.1 0.1 0.1"
+                        animation-mixer="loop:repeat"
+            ></a-entity>
+
+
+            <a-entity position="0 5 5">
+                <a-marker-camera preset='hiro'></a-marker-camera>
+            </a-entity>
+
+
+            <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
+            <!-- <a-entity camera></a-entity> -->
+        </a-scene>
+    </body>
+</html>
