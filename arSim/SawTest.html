@@ -11,7 +11,7 @@
     
     <body style='margin : 0px; overflow: hidden;'>
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
-        <a-scene embedded arjs="sourceType: webcam; trackingMethod: best; debugUIEnabled: true;" stats 
+        <a-scene embedded stats 
                  renderer="logarithmicDepthBuffer:true;" 
                  inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js">
             <!--     position="x z y"-->
@@ -29,15 +29,15 @@
             <!-- <a-plane position="0 0 0" rotation="0 0 0" width="50" height="50" color="#ffffff"></a-plane>             -->
             <a-entity gltf-model="url(models/sawAnimatedMergedBlade.glb)"
                         position="1 0 -1" 
-                        scale="1 1 1"
+                        scale="0.5 0.5 0.5"
                         rotation="0 0 0"
                         animation-mixer="loop:repeat"
             ></a-entity>
 
-
-            <a-entity position="0 10 10"  rotation="0 0 0">
+            <!--
+            <a-entity id="rig" position="10 10 10">
                 <a-marker-camera type='pattern'  url='assets/pattern-kipper.patt' look-controls wasd-controls></a-marker-camera>
-            </a-entity>
+            </a-entity>-->
 
 
             <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
