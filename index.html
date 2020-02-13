@@ -15,14 +15,21 @@
         <!-- Favicons -->
     <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
     <meta name="theme-color" content="#563d7c">
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 
     <style>
     .jumbotron {
         padding-top: 3rem;
         padding-bottom: 3rem;
         margin-bottom: 0;
-        background-color: rgba(172, 197, 30, 0.438);
+        background-color: transparent; 
+        color: white;
+        font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif; 
+        font-size: 24px; 
+        font-style: normal; 
+        font-variant: normal; 
+        font-weight: 700; 
+        line-height: 26.4px;;
     }
     @media (min-width: 768px) {
         .jumbotron {
@@ -44,11 +51,15 @@
     }
 
     footer {
-        padding-top: 3rem;
-        padding-bottom: 3rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+        line-height: 60px; /* Vertically center the text there */
+        background-color: #f5f5f5;
     }
-
-    footer p {
+    p {
         margin-bottom: .25rem;
     }
 
@@ -66,9 +77,14 @@
           font-size: 3.5rem;
         }
       }
+
+      body {
+        background-image: url('images/Technology.jpg');
+      }
+
     </style>
   </head>
-  <body>
+  <body background="">
     <header>
   <div class="collapse bg-dark" id="navbarHeader">
     <div class="container">
@@ -91,8 +107,8 @@
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container d-flex justify-content-between">
       <a class="navbar-brand d-flex align-items-center" href="#">
-        <svg xmlns="http://www.w3.org/2000/svg" class="mr-2" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" focusable="false" width="20" height="20"><path d="M 23 19 a 2 2 0 0 1 -2 2 H 3 a 2 2 0 0 1 -2 -2 V 8 a 2 2 0 0 1 2 -2 h 4 l 2 -3 h 6 l 2 3 h 4 a 2 2 0 0 1 2 2 Z" /><circle cx="12" cy="13" r="4" /></svg>
-        <strong>js, Project Book from Martin Krockert</strong>
+        <i class="fas fa-cogs"></i>
+        <strong>&nbsp;js, Project Book from Martin Krockert</strong>
       </a>
       <button class="navbar-toggler" aria-expanded="false" aria-controls="navbarHeader" aria-label="Toggle navigation" type="button" data-toggle="collapse" data-target="#navbarHeader">
         <span class="navbar-toggler-icon"></span>
@@ -105,7 +121,7 @@
 
   <section class="jumbotron text-center">
     <div class="container">
-      <h1>Here are my js Projects to view</h1>
+      <h1 style="text-align: left; margin-left: 30px;">Here are my js Projects to view</h1>
       <p class="lead text-muted"> </p>
     </div>
   </section>
@@ -162,7 +178,7 @@
 
 </main>
 
-<footer class="text-muted">
+<footer class="text-muted  bg-dark" >
   <div class="container">
     <p class="float-right">
       <a href="#">Back to top</a>
