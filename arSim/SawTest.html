@@ -17,29 +17,29 @@
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
         <a-scene renderer="logarithmicDepthBuffer:true;">
             <!--  inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js" embedded stats      position="x z y"-->
-            <a-entity rotatate="0 0 0" position="0 0 0 ">
-                <a-text position="0 0 0" value="0 0 0"></a-text>
-                <a-text position="1 0 0" value="1 0 0"></a-text>
-                <a-text position="0 0 1" value="0 0 1"></a-text>
-                <a-text position="1 0 1" value="1 0 1"></a-text>
-                <a-text position="-1 0 0" value="-1 0 0"></a-text>
-                <a-text position="0 0 -1" value="0 0 -1"></a-text>
-                <a-text position="1 0 -1" value="1 0 -1"></a-text>
-                <a-text position="-1 0 1" value="-1 0 1"></a-text>
-                <a-text position="-1 0 -1" value="-1 0 -1"></a-text>
-            </a-entity>
+            <a-entity rotatate="0 0 0" position="0 -1 -10">
+                <a-text position="0 0 0" value="0 0 0" color="red"></a-text>
+                <a-text position="1 0 0" value="1 0 0" color="red"></a-text>
+                <a-text position="0 0 1" value="0 0 1" color="red"></a-text>
+                <a-text position="1 0 1" value="1 0 1" color="red"></a-text>
+                <a-text position="-1 0 0" value="-1 0 0" color="red"></a-text>
+                <a-text position="0 0 -1" value="0 0 -1" color="red"></a-text>
+                <a-text position="1 0 -1" value="1 0 -1" color="red"></a-text>
+                <a-text position="-1 0 1" value="-1 0 1" color="red"></a-text>
+                <a-text position="-1 0 -1" value="-1 0 -1" color="red"></a-text>
+
             <!-- <a-plane position="0 0 0" rotation="0 0 0" width="50" height="50" color="#ffffff"></a-plane>             -->
             <a-entity gltf-model="url(models/sawAnimatedMergedBlade.glb)"
                         position="1 0 -1" 
                         scale="0.5 0.5 0.5"
                         rotation="0 0 0"
-                        animation-mixer="loop:repeat"
+                        animation-mixer="loop:repeat; duration: 2"
             ></a-entity>
-
+        </a-entity>
            
-            <a-camera position="0 5 10"></a-camera>
-
-
+            <a-entity position="0 2 0"  rotation="0 0 0">
+                <a-camera look-controls wasd-controls></a-marker-camera>
+            </a-entity>
             <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
             <!-- <a-entity camera></a-entity> -->
         </a-scene>
