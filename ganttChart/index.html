@@ -95,8 +95,9 @@
                         tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
-                                var label = '\r\n Start : ' + tooltipItem.yLabel[4];
-                                label += '\r\n End   : ' + tooltipItem.yLabel[5];
+                                var label = [' Start  : ' + tooltipItem.yLabel[4] ];
+                                label.push(  ' End    : ' + tooltipItem.yLabel[5]);
+                                label.push(' Priority : ' + tooltipItem.yLabel[6]);
                                 return label;
                             },
                             title: function(tooltipItem, data) {
@@ -181,7 +182,7 @@
                   // function goldenRatioColor(index, hue, saturation, value) 
                   var colorCode = goldenRatioColor(i, randomNr, 0.95, 0.65);
                   var rgbColor = ColorArrayToRgba(colorCode, 1);
-                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end]);
+                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority]);
                 });
                 var steps = Math.round(maxTime/10);
                 chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
