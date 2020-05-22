@@ -178,8 +178,8 @@
                   { 
                     chart.data.datasets.push(data);
                   }
-
-                  var colorCode = goldenRatioColor(i, randomNr, 0.95, 0.95);
+                  // function goldenRatioColor(index, hue, saturation, value) 
+                  var colorCode = goldenRatioColor(i, randomNr, 0.95, 0.65);
                   var rgbColor = ColorArrayToRgba(colorCode, 1);
                   chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end]);
                 });
