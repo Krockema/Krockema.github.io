@@ -95,8 +95,12 @@
                         tooltips: {
                         callbacks: {
                             label: function(tooltipItem, data) {
-                                var label = '\r\n Start : ' + tooltipItem.yLabel[4];
-                                label += '\r\n End   : ' + tooltipItem.yLabel[5];
+                                var label = [' Start  : ' + tooltipItem.yLabel[4] ];
+                                label.push(  ' End    : ' + tooltipItem.yLabel[5]);
+                                label.push(' Priority : ' + tooltipItem.yLabel[6]);
+                                label.push(' IsProcessing : ' + tooltipItem.yLabel[7]);
+                                label.push(' IsReady : ' + tooltipItem.yLabel[8]);
+
                                 return label;
                             },
                             title: function(tooltipItem, data) {
@@ -153,6 +157,7 @@
             chart.data.datasets = [];
             var parsed_json = JSON.parse(document.getElementById("chartJson").value);
             var maxTime = 0;
+            var minTime = 2147483647;
             var seed = new Math.seedrandom('randomSeed');
             var randomNr = seed();
             var uniques = GetUniqueOrders(parsed_json)
@@ -164,6 +169,9 @@
                   var index = 0;
                   if(parseInt(element.end) > parseInt(maxTime)){
                       maxTime = parseInt(element.end);
+                  }
+                  if(parseInt(element.start) < parseInt(minTime)){
+                      minTime = parseInt(element.start);
                   }
                   if(!chart.data.labels.includes(element.resource))
                     { 
@@ -178,12 +186,18 @@
                   { 
                     chart.data.datasets.push(data);
                   }
-
-                  var colorCode = goldenRatioColor(i, randomNr, 0.95, 0.95);
-                  var rgbColor = ColorArrayToRgba(colorCode, 1);
-                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end]);
+                  // function goldenRatioColor(index, hue, saturation, value) 
+                  var colorCode = goldenRatioColor(i, randomNr, 0.90, 0.80);
+                  var rgbColor = ColorArrayToRgba(colorCode, 0.7);
+                  if(op.startsWith('Empty')){
+                    rgbColor =  ColorArrayToRgba([167,166,157], 1);
+                  } else if(op.startsWith('Setup')) {
+                    rgbColor =  ColorArrayToRgba(colorCode, 1);
+                  }
+                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady]);
                 });
-                var steps = Math.round(maxTime/10);
+                var steps = Math.round((maxTime - minTime)/10);
+                chart.options.scales.xAxes[1].ticks.min = parseInt(minTime);
                 chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
                 chart.options.scales.xAxes[1].ticks.stepSize = steps; 
             };
@@ -200,3 +214,4 @@
       </script>
      </body>
 </html>
+
