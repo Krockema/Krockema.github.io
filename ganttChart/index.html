@@ -100,7 +100,8 @@
                                 label.push(' Priority : ' + tooltipItem.yLabel[6]);
                                 label.push(' IsProcessing : ' + tooltipItem.yLabel[7]);
                                 label.push(' IsReady : ' + tooltipItem.yLabel[8]);
-
+                                label.push(' IsFinalized : ' + tooltipItem.yLabel[9]);
+                                label.push(' IsWorking : ' + tooltipItem.yLabel[10]);
                                 return label;
                             },
                             title: function(tooltipItem, data) {
@@ -194,7 +195,7 @@
                   } else if(op.startsWith('Setup')) {
                     rgbColor =  ColorArrayToRgba(colorCode, 1);
                   }
-                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady]);
+                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady, element.IsFinalized, element.IsWorking]);
                 });
                 var steps = Math.round((maxTime - minTime)/10);
                 chart.options.scales.xAxes[1].ticks.min = parseInt(minTime);
