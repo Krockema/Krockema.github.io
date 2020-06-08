@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
@@ -97,10 +97,11 @@
                             label: function(tooltipItem, data) {
                                 var label = [' Start  : ' + tooltipItem.yLabel[4] ];
                                 label.push(  ' End    : ' + tooltipItem.yLabel[5]);
+                                label.push(' Bucket : ' + tooltipItem.yLabel[11]);
                                 label.push(' Priority : ' + tooltipItem.yLabel[6]);
                                 label.push(' IsProcessing : ' + tooltipItem.yLabel[7]);
                                 label.push(' IsReady : ' + tooltipItem.yLabel[8]);
-                                label.push(' IsFinalized : ' + tooltipItem.yLabel[9]);
+                                label.push(' Source : ' + tooltipItem.yLabel[9]);
                                 label.push(' IsWorking : ' + tooltipItem.yLabel[10]);
                                 return label;
                             },
@@ -195,7 +196,7 @@
                   } else if(op.startsWith('Setup')) {
                     rgbColor =  ColorArrayToRgba(colorCode, 1);
                   }
-                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady, element.IsFinalized, element.IsWorking]);
+                  chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady, element.IsFixed, element.IsWorking, element.groupId]);
                 });
                 var steps = Math.round((maxTime - minTime)/10);
                 chart.options.scales.xAxes[1].ticks.min = parseInt(minTime);
