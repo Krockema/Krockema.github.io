@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Advanced Operation Editor for Complex Structures</title>
+    <title> Hero for Complex Structures</title>
 
     <!-- Bootstrap extension for Layout Rendering -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -147,32 +147,33 @@
 <!-- Pass the container of the chart to the function -->
 <body onload="main(document.getElementById('graphContainer'))">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Links -->,
+    <div class="navbar-collapse collapse justify-content-stretch">
+        <ul class="navbar-nav">
+            <!-- Dropdown -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                    File
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#" onclick="readFile(graph, mxUtils, 'test.xml')">Load test.xml</a>
+                    <a class="dropdown-item" href="#">Save (Not working yet)</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick='graph.zoomIn();'>Zoom In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick='graph.zoomOut();'>Zoom Out</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick='showXML(graph);'>Show XML</a>
+            </li>
+        </ul>
+    </div>
     <!-- Brand -->
-    <a class="navbar-brand" href="#">Advanced Operation Editor </a>
-    
-    <!-- Links -->
-    <ul class="navbar-nav">
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                File
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" onclick="readFile(graph, mxUtils, 'test.xml')">Load test.xml</a>
-                <a class="dropdown-item" href="#">Save (Not working yet)</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick='graph.zoomIn();'>Zoom In</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick='graph.zoomOut();'>Zoom Out</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#" onclick='showXML(graph);'>Show XML</a>
-        </li>
-    </ul>
-    </nav>
+    <a class="navbar-brand" href="#"><b>H</b>ierarchical <b>E</b>ditor for <b>R</b>esources and <b>O</b>perations </a>
+ </nav>
     <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2 col-md-1">
