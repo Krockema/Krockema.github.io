@@ -198,9 +198,13 @@
                   }
                   chart.data.datasets[index].data.push([start, end, op, rgbColor, element.start, element.end, element.priority, element.IsProcessing, element.IsReady, element.IsFixed, element.IsWorking, element.groupId]);
                 });
-                var steps = Math.round((maxTime - minTime)/10);
-                chart.options.scales.xAxes[1].ticks.min = parseInt(minTime);
-                chart.options.scales.xAxes[1].ticks.max = parseInt(maxTime);
+                var timeend = parseInt(Math.ceil(maxTime / 100.0)) * 100;
+                var timestart = (parseInt(Math.ceil(minTime / 100.0)) * 100) - 100;
+                var steps = Math.round((timestart - timeend)/10);
+                chart.options.scales.xAxes[1].ticks.min = parseInt(timestart);
+                chart.options.scales.xAxes[1].ticks.max = parseInt(timeend);
+                chart.options.scales.xAxes[0].ticks.max = new Date(1262304000+parseInt(timeend)).toISOString()
+                chart.options.scales.xAxes[0].ticks.min = new Date(1262304000+parseInt(timestart)).toISOString()
                 chart.options.scales.xAxes[1].ticks.stepSize = steps; 
             };
 
