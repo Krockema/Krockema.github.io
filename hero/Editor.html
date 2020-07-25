@@ -18,6 +18,19 @@
         mxLanguage = 'de';
         var mxLoadStylesheets = true;
         var mxLoadResources = true;
+    // tooltip generator
+    $(document).ready(function () {
+        $("#graphToolbarContainer img").tooltip({
+        placement: 'right',
+        template: '<div class="tooltip">' +
+            '<div class="tooltip-arrow"></div>' +
+                '<div class="tooltip-head">' +
+                    '<h3>Tool Info</h3>' +
+                '</div>' +
+            '<div class="tooltip-inner"></div>' +
+            '</div>'
+        });
+    });
     </script>
 
     <!-- Load and initialize the mxGraph library -->
