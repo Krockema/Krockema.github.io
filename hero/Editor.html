@@ -21,14 +21,14 @@
     // tooltip generator
     $(document).ready(function () {
         $("#graphToolbarContainer img").tooltip({
-        placement: 'right',
-        template: '<div class="tooltip">' +
-            '<div class="tooltip-arrow"></div>' +
-                '<div class="tooltip-head">' +
-                    '<h3>Tool Info</h3>' +
-                '</div>' +
-            '<div class="tooltip-inner"></div>' +
-            '</div>'
+            placement: 'right',
+            template: '<div class="tooltip">' +
+                '<div class="tooltip-arrow"></div>' +
+                    '<div class="tooltip-head">' +
+                        '<h3>Tool Info</h3>' +
+                    '</div>' +
+                '<div class="tooltip-inner"></div>' +
+                '</div>'
         });
     });
     </script>
@@ -75,7 +75,8 @@
 
                 // create an editor ?! - // Seems not required, did not figure out how this thing works yet.
                 var config = mxUtils.load('src/editor/config.xml').getDocumentElement();
-                var editor = new mxEditor(config);
+                var editor = new mxEditor(config, graph);
+                editor.validation = true;
 
                 // create an Toolbar
                 var tbContainer = document.getElementById('graphToolbarContainer');
@@ -108,6 +109,31 @@
 
                     return cell;
                 };
+
+                // Source node does not want any incoming connections
+                graph.multiplicities.push(new mxMultiplicity(
+                    false, 'SingleNode', null, null, 1, 1, ['SingleNode'],
+                    'Target Must Have 1 Source',
+                    'Target Must Connect From Source'));
+
+                // Target needs exactly one incoming connection from Source
+                graph.multiplicities.push(new mxMultiplicity(
+                    false, 'Source', null, null, 0, 0, null,
+                    'Source Must Have No Incoming Edge',
+                    null)); // Type does not matter
+
+                // invert others.
+                graph.multiplicities.push(new mxMultiplicity(
+                    true, 'SingleNode', null, null, 1, 1, ['SingleNode'],
+                    'Target Must Have 1 Source',
+                    'Target Must Connect From Source'));
+
+                graph.multiplicities.push(new mxMultiplicity(
+                    true, 'Source', null, null, 0, 0, null,
+                    'Source Must Have No Incoming Edge',
+                    null)); // Type does not matter
+
+
 
                 // Installs a popupmenu handler using local function and Disables built-in context menu
                 mxEvent.disableContextMenu(container);
@@ -185,7 +211,7 @@
         </ul>
     </div>
     <!-- Brand -->
-    <a class="navbar-brand" href="#"><b>H</b>ierarchical <b>E</b>ditor for <b>R</b>esources and <b>O</b>perations </a>
+    <a class="navbar-brand" href="#"><b>H</b>ierarchy <b>E</b>ditor for <b>R</b>esources and <b>O</b>perations </a>
  </nav>
     <div class="container-fluid">
             <div class="row">
