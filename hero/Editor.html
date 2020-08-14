@@ -39,6 +39,7 @@
     <script type="text/javascript" src="src/custom.toolbar.js"></script>
     <script type="text/javascript" src="src/custom.tooltip.js"></script>
     <script type="text/javascript" src="src/custom.popupmenu.js"></script>
+    <script type="text/javascript" src="src/custom.validation.js"></script>
     <script type="text/javascript" src="src/custom.xmlexporter.js"></script>
     <script type="text/javascript" src="src/custom.xmlimporter.js"></script>
     <script type="text/javascript" src="src/custom.editor.js"></script>
@@ -93,10 +94,14 @@
                 graph.setMultigraph(true);
                 graph.setTooltips(true);
 
+
                 // Binds keycodes to actionnames in an editor.
                 var keyHandler = new mxDefaultKeyHandler(graph);
                 // Allow frame selection
                 new mxRubberband(graph);
+
+                // create Validation Rules.
+                createValidationRules(graph);
 
 
                 // Matches DnD inside the graph
@@ -109,31 +114,6 @@
 
                     return cell;
                 };
-
-                // Source node does not want any incoming connections
-                graph.multiplicities.push(new mxMultiplicity(
-                    false, 'SingleNode', null, null, 1, 1, ['SingleNode'],
-                    'Target Must Have 1 Source',
-                    'Target Must Connect From Source'));
-
-                // Target needs exactly one incoming connection from Source
-                graph.multiplicities.push(new mxMultiplicity(
-                    false, 'Source', null, null, 0, 0, null,
-                    'Source Must Have No Incoming Edge',
-                    null)); // Type does not matter
-
-                // invert others.
-                graph.multiplicities.push(new mxMultiplicity(
-                    true, 'SingleNode', null, null, 1, 1, ['SingleNode'],
-                    'Target Must Have 1 Source',
-                    'Target Must Connect From Source'));
-
-                graph.multiplicities.push(new mxMultiplicity(
-                    true, 'Source', null, null, 0, 0, null,
-                    'Source Must Have No Incoming Edge',
-                    null)); // Type does not matter
-
-
 
                 // Installs a popupmenu handler using local function and Disables built-in context menu
                 mxEvent.disableContextMenu(container);

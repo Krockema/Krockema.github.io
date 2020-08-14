@@ -29,9 +29,9 @@ function selectionChanged(graph, mxUtils, mxEvent) {
         var attrs = cell.value.children[0].getAttributeNames();
 
         for (var i = 0; i < attrs.length; i++) {
-            if (attrs[i] === "Type") {
+            if (attrs[i] === "Type" && cell.value.nodeName.toLowerCase() === 'complexnode') {
                 createComboBox(graph, form, cell, attrs[i], mxEvent);
-            } else {
+            } else if (attrs[i] !== "Type"){
                 createTextField(graph, form, cell, attrs[i], mxEvent);
             }
         }
