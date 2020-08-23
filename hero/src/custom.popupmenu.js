@@ -21,7 +21,7 @@ function createPopupMenu(graph, editor, menu, cell, evt)
         }
         //menu.addSeparator();
         menu.addItem('Remove', 'src/images/delete.gif', function() {
-            unlockUponDelete(selection);
+            deleteRecursive(selection);
         });
     }
     else
@@ -43,17 +43,21 @@ function allCellParentEquals(graph, selection) {
     return equals;
 }
 
-function unlockUponDelete(removals) {
+function deleteRecursive(removals) {
     if(removals != null) {
         for (var i = 0; i < removals.length; i++) {
-            var itemContainer = document.getElementById(removals[i].value.id);
-            if (itemContainer != null) {
-                itemContainer.className = "operationWrapper uncheck";
-                itemContainer.removeChild(itemContainer.children[1]);
-            }
-            unlockUponDelete(removals[i].children);
-        }
-    graph.removeCells(removals, true);
+            graph.removeCells([removals[i]], true);
+            deleteRecursive(removals[i].children);
+            unlockUponDelete(removals[i].value.id);
+        };
+    }
+}
+
+function unlockUponDelete(id) {
+    var itemContainer = document.getElementById(id);
+    if (itemContainer != null && filterSameId(graph, id).length === 0) {
+        itemContainer.className = "operationWrapper uncheck";
+        // itemContainer.removeChild(itemContainer.children[1]);
     }
 }
 
@@ -75,22 +79,19 @@ function copy(graph, cells) {
     var result = graph.getExportableCells(cells);
     mxClipboard.parents = new Object();
 
-
     for (var i = 0; i < result.length; i++)
     {
         mxClipboard.parents[i] = (parent === null) ? graph.model.getParent(cells[i]) : parent;
     }
-
     mxClipboard.insertCount = 1;
     mxClipboard.setCells(graph.cloneCells(result));
     return result;
 }
 
-function paste(graph, newParent) {
+function paste(graph, newParent, select = true, delta = 40) {
     if (!mxClipboard.isEmpty())
     {
         var cells = graph.getImportableCells(mxClipboard.getCells());
-        var delta = 40;
         var parent = (newParent === null) ? graph.getDefaultParent() : newParent;
 
         graph.model.beginUpdate();
@@ -110,6 +111,8 @@ function paste(graph, newParent) {
             graph.model.endUpdate();
         }
         // selects the inserted cells
-        graph.setSelectionCells(cells);
+        if(select) {
+            graph.setSelectionCells(cells);
+        }
     }
 };

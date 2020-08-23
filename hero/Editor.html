@@ -22,16 +22,25 @@
     $(document).ready(function () {
         $("#graphToolbarContainer img").tooltip({
             placement: 'right',
-            template: '<div class="tooltip">' +
-                '<div class="tooltip-arrow"></div>' +
-                    '<div class="tooltip-head">' +
-                        '<h3>Tool Info</h3>' +
-                    '</div>' +
-                '<div class="tooltip-inner"></div>' +
-                '</div>'
+            template: toolTipTemplate()
         });
+
+        $("#graphOperationContainer img").tooltip({
+            placement: 'right',
+            template: toolTipTemplate()
+        });
+
+        function toolTipTemplate() {
+            return '<div class="tooltip">' +
+                '<div class="tooltip-arrow"></div>' +
+                '<div class="tooltip-head">' +
+                '<h3>Tool Info</h3>' +
+                '</div>' +
+                '<div class="tooltip-inner"></div>' +
+                '</div>';
+        }
     });
-    </script>
+    </script> 
 
     <!-- Load and initialize the mxGraph library -->
     <script type="text/javascript" src="src/js/mxClient.js"></script>
@@ -46,6 +55,7 @@
     <script type="text/javascript" src="src/custom.editor.js"></script>
     <script type="text/javascript" src="src/custom.folding.js"></script>
     <script type="text/javascript" src="src/custom.styling.js"></script>
+    <script type="text/javascript" src="src/custom.hovericons.js"></script>
 
     <!-- custom Toolbar tooltips -->
     <script>
@@ -57,6 +67,92 @@
         var graph;
         var editor;
         var operationBar;
+
+        // Defines a new class for all icons
+        function mxIconSet(state, up, down, upAndDown)
+        {
+            this.images = [];
+            var graph = state.view.graph;
+			
+            // Move Down
+            if (down || upAndDown) {
+                var img = mxUtils.createImage('src/images/down.gif');
+                img.setAttribute('title', 'Down');
+                img.style.position = 'absolute';
+                img.style.cursor = 'pointer';
+                img.style.width = '16px';
+                img.style.height = '16px';
+                img.style.left = (state.x + state.width - 15) + 'px';
+                img.style.top = (state.y + state.height -15) + 'px';
+			    
+                mxEvent.addGestureListeners(img,
+                    mxUtils.bind(this, function(evt) {
+                        var parent = graph.model.getParent(state.cell);
+                        var index = parent.children.indexOf(state.cell);
+                        swapArrayElements(parent.children, index, index + 1);
+                        var result = copy(graph, parent.children);
+                        graph.removeCells(result);
+                        paste(graph, parent, false, 0);
+                        mxEvent.consume(evt);
+                        this.destroy();
+                    })
+                );
+			    
+                state.view.graph.container.appendChild(img);
+                this.images.push(img);
+            }
+            
+            if (up || upAndDown){
+                // Move Up
+                var img = mxUtils.createImage('src/images/up.gif');
+                img.setAttribute('title', 'Up');
+                img.style.position = 'absolute';
+                img.style.cursor = 'pointer';
+                img.style.width = '16px';
+                img.style.height = '16px';
+                img.style.left = (state.x + state.width - 15) + 'px';
+                img.style.top = (state.y) + 'px';
+			    
+                // mxEvent.addGestureListeners(img,
+                //     mxUtils.bind(this, function(evt)
+                //     {
+                //         // Disables dragging the image
+                //         mxEvent.consume(evt);
+                //     })
+                // );
+			    
+                mxEvent.addListener(img, 'click',
+                    mxUtils.bind(this, function(evt)
+                    {
+                        var parent = graph.model.getParent(state.cell);
+                        var index = parent.children.indexOf(state.cell);
+                        swapArrayElements(parent.children, index, index - 1);
+                        var result = copy(graph, parent.children);
+                        graph.removeCells(result);
+                        paste(graph, parent, false, 0);
+                        mxEvent.consume(evt);
+                        this.destroy();
+                    })
+                );
+			    
+                state.view.graph.container.appendChild(img);
+                this.images.push(img);
+            }
+        };
+
+        mxIconSet.prototype.destroy = function()
+        {
+            if (this.images != null)
+            {
+                for (var i = 0; i < this.images.length; i++)
+                {
+                    var img = this.images[i];
+                    img.parentNode.removeChild(img);
+                }
+            }
+			
+            this.images = null;
+        };
 
         // The program starts here
         // Create a sample diagram in the DOM node with the specified ID
@@ -75,13 +171,16 @@
                 graph.swimlaneNesting = true;
                 graph.border = 80;
                 graph.getView().translate = new mxPoint(graph.border / 2, graph.border / 2);
+                graph.htmlLabels = true;
+                addHoverIcons(graph, 20);
                 
                 // create an editor ?! - // Seems not required, did not figure out how this thing works yet.
                 var config = mxUtils.load('src/editor/config.xml').getDocumentElement();
                 editor.configure(config);
                 editor.setGraphContainer(container);
                 editor.validation = true;
-
+                editor.installUndoHandler(graph);
+                
                 // Configures the automatic layout for the table columns
                 editor.layoutSwimlanes = true;
                 editor.createSwimlaneLayout = function ()
@@ -215,25 +314,31 @@
                 <ul class="navbar-nav">
                     <!-- Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                        <a class="nav-link dropdown-toggle iconText" href="#" id="navbardrop" data-toggle="dropdown"><img src="./src/editor/shapes/fileOpen.svg" />
                             File
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" onclick="readFile(graph, mxUtils, 'test.xml')">Load Arrow test</a>
-                            <a class="dropdown-item" href="#" onclick="readFile(graph, mxUtils, 'test2.xml')">Load H Lane test</a>
-                            <a class="dropdown-item" href="#" onclick="readFile(graph, mxUtils, 'test3.xml')">Load V Lane test</a>
-                            <a class="dropdown-item" href="#" onclick="readFromFile('request.xml')">Load xml test</a>
-                            <a class="dropdown-item" href="#">Save (Not working yet)</a>
+                            <a class="dropdown-item xmlDocument" href="#" onclick="readFile(graph, mxUtils, 'test.xml')"><img src="./src/editor/shapes/document.svg" /> Load Arrow test</a>
+                            <a class="dropdown-item xmlDocument" href="#" onclick="readFile(graph, mxUtils, 'test2.xml')"><img src="./src/editor/shapes/document.svg" /> Load H Lane test</a>
+                            <a class="dropdown-item xmlDocument" href="#" onclick="readFile(graph, mxUtils, 'test3.xml')"><img src="./src/editor/shapes/document.svg" /> Load V Lane test</a>
+                            <a class="dropdown-item xmlDocument" href="#" onclick="readFromFile('request.xml')"><img src="./src/editor/shapes/document.svg" /> Load xml test</a>
+                            <a class="dropdown-item saveDocument" href="#"><img src="./src/editor/shapes/upload.svg" /> Save (Not working yet)</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick='graph.zoomIn();'>Zoom In</a>
+                        <a class="nav-link icon" href="#" onclick='editor.undoManager.undo()'><img src="./src/editor/shapes/back.svg" /></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick='graph.zoomOut();'>Zoom Out</a>
+                        <a class="nav-link icon" href="#" onclick='editor.undoManager.redo()'><img src="./src/editor/shapes/forward.svg" /></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick='showXML(graph);'>Show XML</a>
+                        <a class="nav-link icon" href="#" onclick='graph.zoomIn();'><img src="./src/editor/shapes/zoomIn.svg" /></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link icon" href="#" onclick='graph.zoomOut();'><img src="./src/editor/shapes/zoomOut.svg" /></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link iconText" href="#" onclick='showXML(graph);'><img src="./src/editor/shapes/document_light.svg" /> XML</a>
                     </li>
                 </ul>
             </div>
@@ -247,11 +352,11 @@
         <center style="margin-top: 15px">
             <div>Standard Elements</div>
         </center>
-        <div id="graphToolbarContainer" style="margin: auto; width: 70px;"></div>
+        <div id="graphToolbarContainer" class="hasToolTip" style="margin: auto; width: 70px;"></div>
         <center style="margin-top: 15px">
             <div>Operations</div>
         </center>
-        <div id="graphOperationContainer" style="margin: auto; width: 70px;"></div>
+        <div id="graphOperationContainer" class="hasToolTip" style="margin: auto; width: 70px;"></div>
     </div>
     <div class=" " style="display: block; right: 0px; width: 200px; float: right">
         <center style="margin-top: 15px">
