@@ -126,3 +126,15 @@ function filterSameId(graph, id) {
     return graph.model.filterCells(Object.entries(graph.model.cells),
         function(cell) { return cell[1].value != null && cell[1].value.id === id; });
 }
+
+function checkIfOperationExist() {
+    var container = document.getElementsByClassName('operationWrapper');
+    for (var i = 0; i < container.length; i++) {
+        var exists = filterSameId(graph, container[0].id);
+        if (exists.length === 0) {
+            container[0].setAttribute("class", "operationWrapper uncheck");
+        } else {
+            container[0].setAttribute("class", "operationWrapper check");
+        }
+    }
+}

@@ -27,6 +27,21 @@ function createUndoManager(editor) {
 }
 
 function undoLastStep(editor) {
-    editor.undoManager.undo();
-    graph.refresh(graph.getDefaultParent());
+    try {
+        editor.undoManager.undo();
+        graph.refresh(graph.getDefaultParent());        
+    } finally {
+        checkIfOperationExist();
+    } 
+    //graph.cells
+}
+
+function redoLastStep(editor) {
+    try {
+        editor.undoManager.redo();
+        graph.refresh(graph.getDefaultParent());
+    } finally  {
+        checkIfOperationExist();
+    } 
+    //graph.cells
 }

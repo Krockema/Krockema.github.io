@@ -31,7 +31,7 @@ function addToolbarItem(graph, toolbar, prototype, image, id, infoText) {
         vertex.geometry.x = pt.x;
         vertex.geometry.y = pt.y;
 
-        graph.mode.beginUpdate()
+        graph.model.beginUpdate();
         graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
         var created = graph.getSelectionCells()[0];
         //graph.model.setStyle(created, 'process');
