@@ -32,8 +32,8 @@ import {
 
 //Some important stuff.
 let machineNumber = 15; //defines the Number of expected grid spaces reserved for machines. 
-//const messageHubConnectionString = "https://mate.germanywestcentral.cloudapp.azure.com/MessageHub";
-const messageHubConnectionString = "https://localhost:5001/MessageHub";
+const messageHubConnectionString = "https://mate.germanywestcentral.cloudapp.azure.com/MessageHub";
+//const messageHubConnectionString = "https://localhost:5001/MessageHub";
 
 class App {
     constructor() {
