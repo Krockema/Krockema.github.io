@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 420 420" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-2922.56,-1923.51)">
+        <g id="Warnsymbol">
+            <g transform="matrix(1,0,0,1,103.438,160.659)">
+                <circle cx="3028.75" cy="1972.48" r="209.627" style="fill-opacity:0.47;"/>
+            </g>
+            <g transform="matrix(1,0,0,1,2.75101,-10.4539)">
+                <path d="M3129.43,2007.14L3259.28,2236.03L2999.59,2236.03L3129.43,2007.14Z" style="fill-opacity:0.47;stroke:white;stroke-width:13.01px;"/>
+            </g>
+            <ellipse cx="3132.12" cy="2191.92" rx="13.269" ry="13.558" style="fill-opacity:0.47;stroke:white;stroke-width:13.01px;"/>
+            <g transform="matrix(1.99068,0,0,1,-3089.78,0)">
+                <ellipse cx="3125.52" cy="2100.77" rx="6.666" ry="48.751" style="fill-opacity:0.47;stroke:white;stroke-width:8.26px;"/>
+            </g>
+        </g>
+    </g>
+</svg>

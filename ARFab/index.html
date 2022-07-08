@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AR-Fabrik</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"></script>
+    <!--   <script src="~/lib/signalr.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/5.0.5/signalr.min.js"></script>
+    <link rel="stylesheet" href="./assets/UIstyle.css">
+    <!--<script> (stats)
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = '//mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })() 
+    </script>  -->
+</head>
+
+<body>
+    <script type="module">
+        import { App } from './app.js'; document.addEventListener("DOMContentLoaded", function () { const app = new App(); window.app = app; });
+    </script>
+
+    <div id="catastrophy" class="catastrophy">
+
+        <input type="image" class="btn-initAr" id="btn-initAr" onclick="onStartAr()"
+            src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Startbutton.png" />
+
+        <input type="image" class="btn-catastrophy" id="btn-catastrophy" onclick="onCatastrophyOpen()"
+            src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Katastrophenbutton.png" />
+        <div id="catastrophy-menue" class="catastrophy-menue">
+
+            <input type="image" class="btn-catastrophy-close" id="btn-catastrophy" onclick="onCatastrophyClose()"
+                src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Katastrophenbutton-close.png" />
+
+            <input type="image" class="btn-catastrophy-electrical" id="btn-catastrophy" onclick="onElectrical()"
+                src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Katastrophenmenue-electrical.png" />
+
+            <input type="image" class="btn-catastrophy-fire" id="btn-catastrophy" onclick="onFire()"
+                src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Katastrophenmenue-fire.png" />
+
+            <input type="image" class="btn-catastrophy-error" id="btn-catastrophy" onclick="onWater()"
+                src="https://www2.htw-dresden.de/~s82632/Ar-Fabrik/assets/Katastrophenmenue-error.png" />
+            <a href="./license/index.html">License and Copyright</a>
+        </div>
+    </div>
+
+    <script>
+        function onStartAr() {
+            document.getElementById("btn-catastrophy").style.visibility = "visible";
+            document.getElementById("btn-initAr").style.visibility = "hidden";
+            window.app.initAudio();
+        }
+
+        function onCatastrophyOpen() {
+            document.getElementById("catastrophy-menue").style.bottom = "0%";
+            document.getElementById("btn-catastrophy").style.visibility = "hidden";
+            document.getElementById("ARButton").style.bottom = "-60px";
+            //window.app.audioManager.playGlobalSound("catastrophy", "catastrophy.mp3", 0.8, true); //Abgeschaltet aufgrund von Urheberechtsbedenken. Lied: Pride goes before the fall, As I May, 4 Sekunden. 
+        }
+
+        function onCatastrophyClose() {
+            document.getElementById("catastrophy-menue").style.bottom = "-60%";
+            document.getElementById("btn-catastrophy").style.visibility = "visible";
+            document.getElementById("ARButton").style.bottom = "40px";
+            //window.app.audioManager.stopGlobalSound("catastrophy"); //Abgeschaltet aufgrund von Urheberechtsbedenken. Lied: Pride goes before the fall, As I May, 4 Sekunden. 
+        }
+
+        function onWater() {
+            if (window.catastropheManager != undefined)
+                onCatastrophyClose();
+        }
+
+        function onFire() {
+            if (window.catastropheManager != undefined)
+                window.catastropheManager.start_catastrophe("fire", 20);
+            onCatastrophyClose();
+        }
+
+        function onElectrical() {
+            if (window.catastropheManager != undefined)
+                window.catastropheManager.start_catastrophe("electrical", 20);
+            onCatastrophyClose();
+        }
+    </script>
+
+</body>

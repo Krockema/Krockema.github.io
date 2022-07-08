@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "serve": "^13.0.4",
+    "stats.js": "^0.17.0",
+    "typescript": "^4.7.4"
+  },
+  "name": "arprojekt",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mosel28/ArProjekt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mosel28/ArProjekt/issues"
+  },
+  "homepage": "https://github.com/Mosel28/ArProjekt#readme",
+  "description": "Based on Three.js, this will be a universal render engine for simulated factorys.",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {}
+}

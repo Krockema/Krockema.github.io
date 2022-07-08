@@ -1,0 +1,98 @@
+a{
+    position: absolute;
+    color: white;
+    font-size: larger;
+    bottom: 0%;
+
+}
+
+.catastrophy {
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 30%;
+}
+
+.catastrophy-menue {
+  position: absolute;
+  bottom: -60%;
+  left: 0px;
+  right: 0px;
+  height: 25%;
+  background-color: #111111bb;
+  position: fixed;
+  transition: 0.5s;
+}
+
+#ARButton {
+  position: absolute;
+  width: 4%;
+  background-color: #111111bb;
+  color: white;
+  bottom: 40px;
+
+  font-size: large;
+  opacity: 30%;
+  transition: 0.5s;
+}
+
+.btn-catastrophy-close {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  width: 8%;
+  transition: 1s;
+}
+
+.btn-catastrophy {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  width: 8%;
+  transition: 1s;
+  visibility: hidden;
+}
+
+.btn-catastrophy-electrical {
+  position: absolute;
+  bottom: 40px;
+  right: 35%;
+  width: 8%;
+  transition: 1s;
+}
+
+.btn-catastrophy-fire {
+  position: absolute;
+  bottom: 40px;
+  right: 50%;
+  width: 8%;
+  transition: 1s;
+}
+
+.btn-catastrophy-error {
+  position: absolute;
+  bottom: 40px;
+  right: 65%;
+  width: 8%;
+  transition: 1s;
+}
+
+.btn-initAr {
+  position: absolute;
+  bottom: 40px;
+  left: 5%;
+  width: 8%;
+  transition: 1s;
+}
+
+@media (max-aspect-ratio: 2/3) {
+  .catastrophy-menue {
+    height: 15%;
+  }
+}
+
+@media (min-aspect-ratio: 8/5) {
+  .catastrophy-menue {
+    height: 40%;
+  }
+}
