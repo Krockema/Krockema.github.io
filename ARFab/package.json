@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "serve": "^13.0.4",
+    "serve": "^14.2.0",
     "stats.js": "^0.17.0",
     "typescript": "^4.7.4"
   },
